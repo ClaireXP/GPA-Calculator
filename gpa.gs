@@ -22,7 +22,7 @@ function calcIEA(courseStatsFall, courseStatsSpring) {
   let weights = [];
 
   for (let i = 0; i < courseStatsFall[0].length; i++) {
-    if(!FYE.has(courseStatsFall[i][0].replace(" ", ""))) continue;
+    if (!FYE.has(courseStatsFall[i][0].replace(" ", ""))) continue;
 
     let credits = courseStatsFall[i][1];
     weights.push(GRADES[courseStatsFall[i][2]] * credits);
@@ -30,7 +30,7 @@ function calcIEA(courseStatsFall, courseStatsSpring) {
   }
 
   for (let i = 0; i < courseStatsSpring[0].length; i++) {
-    if(!FYE.has(courseStatsSpring[i][0].replace(" ", ""))) continue;
+    if (!FYE.has(courseStatsSpring[i][0].replace(" ", ""))) continue;
 
     let credits = courseStatsSpring[i][1];
     weights.push(GRADES[courseStatsSpring[i][2]] * credits);
@@ -48,7 +48,6 @@ function calcCumulativeGPA(semStats, current) {
     if (semStats[0][i + current] == "N/A") break;
 
     let credits = semStats[1][i];
-
     weighted.push(semStats[0][i] * credits);
     totalCredits += credits;
   }
@@ -75,4 +74,18 @@ function numToLetter(grade) {
   }
 
   return letter;
+}
+
+function awards(semesterGPA, cumulativeGPA) {
+  let awards = "";
+
+  if (semesterGPA > 3 && cumulativeGPA > 3.5) {
+    awards += "Dean's List";
+
+    if (semesterGPA > 3.5 && cumulativeGPA > 2) awards += " & Semester Honors";
+  } else if (semesterGPA > 3.5 && cumulativeGPA > 2) awards = "Semester Honors";
+  else if (semesterGPA == "N/A") awards = "Too Early to Tell";
+  else awards = "None"
+
+  return awards;
 }
